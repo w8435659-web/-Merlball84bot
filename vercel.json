@@ -5,11 +5,5 @@
       "src": "bot.py",
       "use": "@vercel/python"
     }
-  ],
-  "probes": [
-    {
-      "path": "/",
-      "mustContain": "🤖"
-    }
   ]
 }
