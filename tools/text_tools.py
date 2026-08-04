@@ -12,6 +12,10 @@ def character_counter(text):
     words = len(text.split())
     sentences = len(re.findall(r'[.!?]+', text))
     
+    # Fixed: Removed backslash from f-string
+    avg_word_length = characters / words if words > 0 else 0
+    words_per_sentence = words / sentences if sentences > 0 else words
+    
     return f"""
 📊 *Text Analysis Results*
 
@@ -19,10 +23,10 @@ def character_counter(text):
 📝 Characters (no spaces): {len(text.replace(' ', ''))}
 📝 Words: {words}
 📝 Sentences: {sentences}
-📝 Paragraphs: {len(text.split('\n\n'))}
+📝 Paragraphs: {len(text.split(chr(10) + chr(10)))}
 
-✅ Average word length: {characters/words:.1f} characters
-✅ Words per sentence: {words/sentences:.1f if sentences > 0 else words}
+✅ Average word length: {avg_word_length:.1f} characters
+✅ Words per sentence: {words_per_sentence:.1f}
 """
 
 def case_converter(text):
@@ -83,14 +87,17 @@ def reverse_text(text):
     if not text or len(text.strip()) < 1:
         return "❌ Send text to reverse!"
     
+    reversed_chars = text[::-1]
+    reversed_words = ' '.join(text.split()[::-1])
+    
     return f"""
 🔄 *Reversed Text*
 
 📝 Original: {text}
 
-⬅️ Reversed: {text[::-1]}
+⬅️ Reversed: {reversed_chars}
 
-📊 Words reversed: {' '.join(text.split()[::-1])}
+📊 Words reversed: {reversed_words}
 """
 
 def word_frequency(text):
@@ -98,20 +105,22 @@ def word_frequency(text):
     if not text or len(text.strip()) < 1:
         return "❌ Send text to analyze word frequency!"
     
-    words = re.findall(r'\b[a-zA-Z]+\b', text.lower())
+    words = re.findall(r'[a-zA-Z]+', text.lower())
     if not words:
         return "❌ No words found in your text!"
     
     freq = Counter(words)
     top_words = freq.most_common(10)
+    total_words = len(words)
+    unique_words = len(freq)
     
     result = "📊 *Word Frequency Analysis*\n\n"
-    result += f"📝 Total words: {len(words)}\n"
-    result += f"📝 Unique words: {len(freq)}\n\n"
+    result += f"📝 Total words: {total_words}\n"
+    result += f"📝 Unique words: {unique_words}\n\n"
     
     result += "*Top 10 most common words:*\n"
     for word, count in top_words:
-        percentage = (count / len(words)) * 100
+        percentage = (count / total_words) * 100
         result += f"• {word}: {count} times ({percentage:.1f}%)\n"
     
     return result
@@ -156,3 +165,15 @@ def acronym_generator(phrase):
 
 💡 Used for creating memorable abbreviations!
 """
+
+def random_word_generator(count=5):
+    """Generate random words"""
+    word_list = [
+        'apple', 'banana', 'cherry', 'dragon', 'eagle', 'forest', 'garden',
+        'horizon', 'island', 'journey', 'kingdom', 'liberty', 'mountain',
+        'nature', 'ocean', 'planet', 'river', 'sunshine', 'tree', 'unicorn',
+        'valley', 'waterfall', 'xenon', 'youth', 'zeppelin'
+    ]
+    
+    words = random.sample(word_list, min(count, len(word_list)))
+    return "📝 *Random Words*\n\n" + "\n".join(f"• {word}" for word in words)
