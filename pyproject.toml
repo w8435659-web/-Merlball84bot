@@ -1,0 +1,23 @@
+[project]
+name = "telegram-tools-bot"
+version = "2.0.0"
+description = "50+ Free Telegram Tools Bot"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pyTelegramBotAPI>=4.18.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "python-dateutil>=2.8.2",
+    "Pillow>=10.1.0",
+    "qrcode>=7.4.2",
+    "python-barcode>=0.15.1",
+    "beautifulsoup4>=4.12.2",
+    "cssmin>=0.2.0",
+    "jsmin>=3.0.1",
+    "sqlparse>=0.4.4",
+    "Markdown>=3.5.1",
+    "xmltodict>=0.13.0",
+    "python-whois>=0.8.0",
+    "dnspython>=2.4.2"
+]
